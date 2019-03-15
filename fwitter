@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# super cool feed reader
+# lightweight feed reader. Use together with refresh-feeds
 
 test ! -d "$FEEDCACHE" && { echo '$FEEDCACHE must be a valid dir'; exit 1; }
 

@@ -2,7 +2,7 @@
 
 # radio browser and player
 
-test ! -f "$RADIODB" && { echo "$RADIODB" is missing; exit; }
+test ! -f "$RADIODB" && { echo "$RADIODB" is missing; exit 1; }
 
 cat "$RADIODB" \
 | vis-menu-formatted 'cut -f 1' -l $(expr $(tput lines) - 1) \
