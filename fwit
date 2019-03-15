@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# super cool feed reader
+
+test ! -d "$FEEDCACHE" && { echo '$FEEDCACHE must be a valid dir'; exit 1; }
+
+sep=-_@-_
+
+choice=$(
+    ls "$FEEDCACHE" \
+    | xargs -n 1 -I % head "$FEEDCACHE"/% \
+    | sort -nr \
+    | sed "s/	/$sep/g" \
+    | vis-menu-formatted \
+        "awk '{print substr(\$7, 1, 15),\$2}' FS=$sep OFS=$sep | column -ts $sep" \
+        -i -l $(expr $(tput lines) - 1)
+)
+
+test "$choice" = ':q' && exit 0
+
+echo $choice | awk '{print $3}' FS="$sep" | xargs surf
+
+$0

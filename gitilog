@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# gitilog is for "git interactive log"
+
+logs="$(git log --oneline)"
+selectedCommit=$(echo "$logs" | vis-menu -i -l $(expr $(tput lines) - 1) | cut -d' ' -f1)
+clear
+test -n "$selectedCommit" && git show --color --stat -p "$selectedCommit" | less -RS

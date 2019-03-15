@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# surf browser that works from data from standard input
+
+tmpfile="/tmp/surf-stdin-$(date +%s)"
+
+cat > "$tmpfile"
+
+surf "$@" "$tmpfile"
+
+rm "$tmpfile"

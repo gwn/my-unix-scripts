@@ -1,0 +1,9 @@
+#!/bin/sh
+
+test -z "$TWILIO_API_KEY" && { echo '$TWILIO_API_KEY is unset'; exit 1; }
+
+curl -X POST https://api.twilio.com/2010-04-01/Accounts/ACbe3d81812a7c81d687b4f67384c33d2f/Messages.json \
+    --data-urlencode "From=$1" \
+    --data-urlencode "To=$2" \
+    --data-urlencode "Body=$3" \
+    -u "$TWILIO_API_KEY"

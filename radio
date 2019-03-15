@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# radio browser and player
+
+radioDB="$HOME/radios.tsv"
+
+test ! -f "$radioDB" && { echo "$radioDB" is missing; exit; }
+
+cat $HOME/radios.tsv \
+| vis-menu-formatted 'cut -f 1' -l $(expr $(tput lines) - 1) \
+| cut -f 2 \
+| xargs mpv

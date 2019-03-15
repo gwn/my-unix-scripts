@@ -1,0 +1,6 @@
+#!/bin/sh
+
+test -z "$WIFI_INTERFACE" && { echo '$WIFI_INTERFACE is undefined'; exit 1; }
+
+ip link set $WIFI_INTERFACE up
+iw dev $WIFI_INTERFACE scan | grep SSID

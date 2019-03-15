@@ -1,0 +1,2 @@
+#!/bin/sh
+find ${1:-.} \( -path "*/.git" -o -path "*/node_modules" -o -path "*/.next" \) -prune -o -type f -print

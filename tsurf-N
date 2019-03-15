@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# tabbed surf browser with developer tools enabled
+
+tabbed -r 2 -f -p -1 surf -e x -i -z 1.25 -N $HOME/welcome.html

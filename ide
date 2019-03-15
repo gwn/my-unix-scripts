@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# command line ide
+
+cd "$1"
+
+opts=$(echo -e "> shell\n> tree\n\n$(findignore)")
+selectedOpt=$(echo "$opts" | vis-menu -i -l $(expr $(tput lines) - 1))
+
+clear
+
+case "$selectedOpt" in
+    '> shell') "$SHELL";;
+    '> tree') noice;;
+    *) test -n "$selectedOpt" && "$EDITOR" "$selectedOpt"
+esac
+
+ide "$1"
+
+trap "cd -" EXIT

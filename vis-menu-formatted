@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# a wrapper for vis-menu in which you can format the labels to display
+
+transformer="$1"; shift 1
+items=$(cat)
+transformedItems=$(echo "$items" | eval "$transformer")
+choice=$(echo "$transformedItems" | vis-menu "$@")
+choiceNo=$(echo "$transformedItems" | grep -n "$choice" | cut -d: -f1)
+
+test -z "$choiceNo" && { echo "$choice"; exit; }
+
+echo "$items" | tail +$choiceNo | head -1

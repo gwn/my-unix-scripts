@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# tabbed ide
+
+EDITOR=vimshorttitle tabbed -r 2 -f -p -1 st -w x -e ide "$HOME/$1"

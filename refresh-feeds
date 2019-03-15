@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# fetch and save all feeds in the feed list file into the feed cache
+
+test ! -f "$FEEDLIST" && { echo '$FEEDLIST must be a valid file'; exit 1; }
+
+cat "$FEEDLIST" | xargs -P $(nproc) -n 1 refresh-feed

@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# lightweight GraphQL client
+
+if test -z "$gqhost" -o -z "$gqtoken" -o -z "$EDITOR"; then
+    echo '$gqhost, $gqtoken and $EDITOR must be defined in the environment'
+    exit 1
+fi
+
+if test -z $(which jq); then
+    echo 'Please install jq'
+    exit 2
+fi
+
+tmpFile="/tmp/__commandlinegraphqlclienttmpfile.siksok"
+descriptionText="# Write your GraphQL query here, then save and exit"
+
+if test ! -f "$tmpFile"; then
+    echo "$descriptionText" > "$tmpFile"
+fi
+
+"$EDITOR" "$tmpFile"
+query=$(cat "$tmpFile" | sed 's/$/\\n/' | tr -d '\n')
+
+response=$(
+    curl -i $gqhost \
+        -H 'Authorization: '$gqtoken \
+        -H 'Content-type: application/json' \
+        -XPOST \
+        -d "{\"query\": \"$query\"}"
+)
+
+statusCodeFirstChar=$(echo $response | head -n 1 | cut -d' ' -f2 | cut -c 1)
+
+sepLineNo=$(echo "$response" | tr -d '\r' | grep -n ^$ | cut -d: -f1)
+# empty line that separates the HTTP Headers from the body
+
+body=$(echo "$response" | tail -n +$(expr $sepLineNo + 1))
+
+if test $statusCodeFirstChar -eq 2; then
+    if test -t 1; then
+        echo "$body" | jq -C . | less -RSFX
+    else
+        echo "$body" | jq .
+    fi
+else
+    echo "$response"
+fi
