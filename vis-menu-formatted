@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# a wrapper for vis-menu in which you can format the labels to display
+# a wrapper for vis-menu with which you can format the labels to display
 
 transformer="$1"; shift 1
 items=$(cat)

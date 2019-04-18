@@ -2,4 +2,4 @@
 
 # tabbed surf browser
 
-tabbed -r 2 -f -p -1 surf -e x -i -z 1.25 file://$HOME/welcome.html
+tabbed -r 2 -f -p -1 surf -e x -i file://$HOME/welcome.html

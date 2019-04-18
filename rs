@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # lightweight REST client
+# Define $rshost and optionally $rstoken (for protected endpoints) to start!
+# $rstoken is the value of the "Authorization" header. If you use a different
+# header for this, change the script!
 
 if test -z "$rshost"; then
     echo '$rshost must be defined in the environment'
@@ -13,11 +16,11 @@ if test -z $(which jq); then
 fi
 
 path=$1; shift
-curlParams="${*:--XGET}"
+curlParams="$@"
 
 response=$(
     curl -i $rshost$path \
-        -H 'Authorization: '$rstoken \
+        -H "Authorization: $rstoken" \
         -H 'Content-type: application/json' \
         "$curlParams"
 )
