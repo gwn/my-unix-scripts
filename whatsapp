@@ -1,0 +1,3 @@
+sudo systemctl start anbox-container-manager
+anbox-bridge
+anbox launch --package=com.whatsapp --component=com.whatsapp.HomeActivity

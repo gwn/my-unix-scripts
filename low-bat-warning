@@ -1,15 +1,20 @@
 #!/bin/sh
 
-# TODO: update to use pamixer instead of amixer
+# TODO: Make pamixer work from cron
+
+ls /sys/class/power_supply/BAT0 || exit 1
 
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 
 test "$capacity" -gt 7 && exit 0
 
-curvol=$(amixer get Master | awk '$0~/%/{print $5}' | tr -d '[]%' | head -1)
+# curvol=$(pamixer --get-volume)
+# 
+# echo "curvol is $curvol" >> $HOME/volume.txt
+# 
+# test $curvol -lt 50 && pamixer -set-volume 50
 
-test "$curvol" -lt 50 && amixer set Master 50%
-
+notify-send -t 600000 -u critical "LOW BATTERY: "$capacity"%"
 ding & sleep 0.2 && ding & sleep 0.4 && ding
 
-test "$curvol" -lt 50 && amixer set Master "$curvol%"
+# test $curvol -lt 50 && pamixer --set-volume $curvol
