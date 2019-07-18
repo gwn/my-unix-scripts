@@ -1,1 +1,5 @@
-parsemail.js html | surf-stdin
+#!/bin/sh
+
+mailfile=/tmp/mail-`date +%s`
+parsemail.js html > $mailfile
+$BROWSER $mailfile

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+xmodmap /etc/X11/xinit/.Xmodmap.hhkb
+xrandr --output VGA1 --auto --primary --above LVDS1
+sh ~/.xprofile
+
