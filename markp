@@ -1,0 +1,4 @@
+#!/bin/sh
+filename=/tmp/markdown-`date +%s`.html
+cat | markdown > $filename
+$BROWSER $filename
