@@ -1,0 +1,13 @@
+#!/bin/sh
+
+test -e /dev/sdb1 && mount /dev/sdb1 /mnt/flash
+
+target=/mnt/flash
+
+mount /dev/sdb1 $target || \
+mount /dev/sdc1 $target || \
+mount /dev/sdd1 $target || \
+mount /dev/sde1 $target || \
+{ echo failed to mount; exit 1; }
+
+noice $target
