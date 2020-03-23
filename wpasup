@@ -1,1 +1,1 @@
-wpa_supplicant -D n180211,wext -i $WIFI_INTERFACE -c "$1"
+wpa_supplicant -D nl80211,wext -i $WIFI_INTERFACE -c "$1"
