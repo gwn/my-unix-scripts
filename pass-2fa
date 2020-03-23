@@ -1,0 +1,1 @@
+oathtool --totp -b `pass $1-2fa` | tee /dev/tty | xsel -b
