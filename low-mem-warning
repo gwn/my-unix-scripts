@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# NOTE: copied from low-bat-warning
+# TODO: Make pamixer work from cron
+
+capacity=$(free | sed -n 2p | awk '{print $7}')
+capacityInGi=$(echo $capacity | awk '{printf "%0.2f", $1 / 1024 / 1024}')
+
+test "$capacity" -ge 1048576 && exit 0
+
+# curvol=$(pamixer --get-volume)
+# 
+# echo "curvol is $curvol" >> $HOME/volume.txt
+# 
+# test $curvol -lt 50 && pamixer -set-volume 50
+
+notify-send -t 600000 -u critical "LOW MEMORY: $capacityInGi Gi"
+ding & sleep 0.2 && ding & sleep 0.4 && ding
+
+# test $curvol -lt 50 && pamixer --set-volume $curvol
