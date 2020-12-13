@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Requirements: GraphicsMagick or ImageMagick
+
+usage() {
+    echo Usage:
+    echo -e "\t$0 /path/to/img/to/tile grid-spec /path/to/result/img"
+    echo ""
+    echo Example:
+    echo -e "\t$0 puppy.png 4x4 puppy_tiled.png"
+}
+
+test "$#" -lt 3 && usage && exit 1
+
+which gm >/dev/null 2>/dev/null && prefix=gm
+
+imgPath=$1; shift
+grid=$1; shift
+outFile=$1; shift
+
+imgCount=$(echo $grid | sed 's/x/ * /' | xargs expr)
+
+$prefix montage $(yes $imgPath | head -n $imgCount) -tile $grid "$@" $outFile
